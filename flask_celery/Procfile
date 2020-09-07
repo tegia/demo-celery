@@ -1,0 +1,2 @@
+worker: celery -A tasks worker --loglevel=info
+flower: celery flower -A tasks --port=5555 --broker=redis://redis_test:6379/0
