@@ -5,6 +5,9 @@ services:
       context: ./flask_app
       dockerfile: Dockerfile
     restart: always
+    environment: 
+      - CELERY_BROKER_URL=redis://redis_test:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
     ports:
      - "5000:5000"
     depends_on:
@@ -13,6 +16,9 @@ services:
     build:
       context: ./flask_celery
       dockerfile: Dockerfile
+    environment: 
+      - CELERY_BROKER_URL=redis://redis_test:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
     ports:
       - "5556:5555"
     depends_on:
