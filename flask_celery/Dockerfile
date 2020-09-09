@@ -25,4 +25,4 @@ RUN pip3 install -r requirements.txt
 # run the worker
 #ENTRYPOINT ['celery']
 #CMD ['-A','tasks', 'worker','--loglevel=info']
-ENTRYPOINT celery -A tasks worker --loglevel=info
+ENTRYPOINT honcho -f Procfile start

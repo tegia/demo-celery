@@ -13,6 +13,6 @@ Now load `http://your-dockermachine-ip:5000/add/2/3` in browser. It should creat
 
 To check the status of the job hit `http://your-dockermachine-ip:5000/check/taskid`. It should either show `PENDING` or the result `5`.
 
-To monitor that the worker is working fine go to `http://your-dockermachine-ip:5555`.It runs a [flower](http://flower.readthedocs.org) server. It should show one worker ready to serve.
+To monitor that the worker is working fine go to `http://your-dockermachine-ip:5556`.It runs a [flower](http://flower.readthedocs.org) server. It should show one worker ready to serve.
 
 To scale the workers, now run `docker-compose scale worker=5`. This will create `4` more containers each running a worker. `http://your-dockermachine-ip:5555` should now show 5 workers waiting for some jobs!
