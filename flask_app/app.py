@@ -8,9 +8,9 @@ import celery.states as states
 env=os.environ
 app = Flask(__name__)
 
-@app.route('/add/<int:param1>/<int:param2>')
-def add(param1,param2):
-    task = celery.send_task('mytasks.add', args=[param1, param2], kwargs={})
+@app.route('/add/<int:param1>/<int:param2>/<param3>')
+def add(param1,param2,param3):
+    task = celery.send_task('mytasks.add', args=[param1, param2], kwargs={}, task_id=param3)
     return "<a href='{url}'>check status of {id} </a>".format(id=task.id,
                 url=url_for('check_task',id=task.id,_external=True))
 
@@ -21,3 +21,4 @@ def check_task(id):
         return res.state
     else:
         return str(res.result)
+
