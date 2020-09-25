@@ -1,26 +1,44 @@
 version: '2'
 services:
-  web:
+  # web:
+  #   build:
+  #     context: ./flask_app
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   environment: 
+  #     - CELERY_BROKER_URL=redis://redis_test:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
+  #   volumes: 
+  #     - ./flask_app:/flask_app
+  #   ports:
+  #    - "5000:5000"
+  #   depends_on:
+  #     - redis
+  # worker:
+  #   build:
+  #     context: ./flask_celery
+  #     dockerfile: Dockerfile
+  #   volumes: 
+  #     - ./flask_celery:/flask_celery
+  #   environment: 
+  #     - CELERY_BROKER_URL=redis://redis_test:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
+  #   ports:
+  #     - "5556:5555"
+  #   depends_on:
+  #     - redis
+  combine_app_celery:
     build:
-      context: ./flask_app
+      context: ./combine_app_celery
       dockerfile: Dockerfile
-    restart: always
-    environment: 
-      - CELERY_BROKER_URL=redis://redis_test:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
-    ports:
-     - "5000:5000"
-    depends_on:
-      - redis
-  worker:
-    build:
-      context: ./flask_celery
-      dockerfile: Dockerfile
+    volumes: 
+      - ./combine_app_celery:/combine_app_celery
     environment: 
       - CELERY_BROKER_URL=redis://redis_test:6379/0
       - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
     ports:
       - "5556:5555"
+      - "5000:5000"
     depends_on:
       - redis
   redis:
