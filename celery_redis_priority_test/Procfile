@@ -1,3 +1,4 @@
-worker: celery worker -A tasks -Q a-high,b-medium,c-low -Ofair -c1 --prefetch-multiplier=1
+worker1: celery worker -A tasks -Q a-high,b-medium,c-low -Ofair -c1 --prefetch-multiplier=1 -n worker1@%h
+# worker2: celery worker -A tasks -Q b-medium -Ofair -c1 --prefetch-multiplier=1 -n worker2@%h
 flower: celery flower -A tasks --port=5555 --broker=redis://redis_test:6379/0
 celery-beat: celery -A tasks beat -s /var/run/celerybeat-schedule --loglevel=info

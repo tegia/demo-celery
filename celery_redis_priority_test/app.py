@@ -19,7 +19,7 @@ app.conf.task_create_missing_queues = True
 
 app.conf.broker_transport_options = {"queue_order_strategy": "sorted"}
 
-app.conf.worker_prefetch_multiplier = 1
+# app.conf.worker_prefetch_multiplier = 1
 
 app.conf.task_inherit_parent_priority = True
 

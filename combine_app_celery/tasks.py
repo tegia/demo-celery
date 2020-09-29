@@ -3,6 +3,7 @@ import time
 from celery import Celery
 import requests
 import json
+from kombu import Queue
 env=os.environ
 CELERY_BROKER_URL=env.get('CELERY_BROKER_URL','redis://localhost:6379'),
 CELERY_RESULT_BACKEND=env.get('CELERY_RESULT_BACKEND','redis://localhost:6379')
@@ -12,10 +13,45 @@ celery= Celery('tasks',
                 broker=CELERY_BROKER_URL,
                 backend=CELERY_RESULT_BACKEND)
 
+celery.conf.result_backend = CELERY_RESULT_BACKEND
+celery.conf.broker_url = CELERY_BROKER_URL
 
-@celery.task(name='mytasks.add', rate_limit='10/s')
+celery.conf.task_default_queue = "b-medium"
+
+celery.conf.task_create_missing_queues = True
+
+#app.conf.task_default_priority = 3
+
+celery.conf.broker_transport_options = {"queue_order_strategy": "sorted"}
+
+# celery.conf.worker_prefetch_multiplier = 1
+
+celery.conf.task_inherit_parent_priority = True
+
+#app.conf.broker_transport_options = {
+#    'priority_steps': list(range(10)),
+#}
+
+celery.conf.task_queues = (
+    Queue("a-high"),
+    Queue("b-medium"),
+    Queue("c-low"),
+)
+
+celery.conf.task_routes = {
+    f'tasks.low_priority_wait': {
+        'queue': 'c-low',
+        'routing_key': 'c-low.priority',
+    },
+    f'tasks.high_priority_wait': {
+        'queue': 'a-high',
+        'routing_key': 'a-high.priority',
+    },
+}
+
+@celery.task(name='mytasks.add')
 def add(x, y):
-    time.sleep(5) # lets sleep for a while before doing the gigantic addition task!
+    # time.sleep(5) # lets sleep for a while before doing the gigantic addition task!
     print(''+str(x)+'-'+str(y))
     return x+y
     # raise Exception("Sorry, no numbers below zero")

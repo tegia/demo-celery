@@ -27,36 +27,33 @@ services:
   #     - "5556:5555"
   #   depends_on:
   #     - redis
-  # combine_app_celery:
-  #   build:
-  #     context: ./combine_app_celery
-  #     dockerfile: Dockerfile
-  #   volumes: 
-  #     - ./combine_app_celery:/combine_app_celery
-  #   environment: 
-  #     - CELERY_BROKER_URL=redis://redis_test:6379/0
-  #     - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
-  #   ports:
-  #     - "5556:5555"
-  #     - "5000:5000"
-  #   depends_on:
-  #     - redis
-  priority_test:
+  combine_app_celery:
     build:
-      context: ./celery_redis_priority_test
+      context: ./combine_app_celery
       dockerfile: Dockerfile
-    volumes:
-      - ./celery_redis_priority_test:/celery_redis_priority_test
+    volumes: 
+      - ./combine_app_celery:/combine_app_celery
     environment: 
       - CELERY_BROKER_URL=redis://redis_test:6379/0
       - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
-    ports: 
+    ports:
       - "5556:5555"
+      - "5000:5000"
     depends_on:
       - redis
+  # priority_test:
+  #   build:
+  #     context: ./celery_redis_priority_test
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./celery_redis_priority_test:/celery_redis_priority_test
+  #   environment: 
+  #     - CELERY_BROKER_URL=redis://redis_test:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
+  #   ports: 
+  #     - "5556:5555"
+  #   depends_on:
+  #     - redis
   redis:
     image: redis
     container_name: redis_test
-      - "5000:5000"
-    depends_on: 
-      - redis
