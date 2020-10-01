@@ -25,3 +25,5 @@ RUN pip3 install -r requirements.txt
 #ENTRYPOINT ['celery']
 #CMD ['-A','tasks', 'worker','--loglevel=info']
 ENTRYPOINT honcho -f Procfile start
+# ENTRYPOINT ['celery']
+# CMD ['-A', 'tasks', 'worker', '--loglevel=info']

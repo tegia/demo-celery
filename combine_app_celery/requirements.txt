@@ -6,3 +6,4 @@ honcho==1.0.1
 requests
 Flask==1.0.2
 gunicorn
+eventlet
