@@ -1,0 +1,6 @@
+web: gunicorn --bind 0.0.0.0:5000 --workers 3 app:app
+# # worker: celery -A tasks worker --loglevel=info -Ofair -Q 
+# worker1: celery worker -A tasks -Q a-high,b-medium,c-low -Ofair -c1 --prefetch-multiplier=200 -n worker1@%h
+worker1: celery worker -A tasks -Q a-high,b-medium,c-low -Ofair --pool=eventlet --concurrency=250
+flower: celery flower -A tasks --port=5555 --broker=redis://redis_test:6379/2
+celery_beat: celery -A tasks beat -s /var/run/celerybeat-schedule --loglevel=info

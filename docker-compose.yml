@@ -27,21 +27,21 @@ services:
   #     - "5556:5555"
   #   depends_on:
   #     - redis
-  combine_app_celery:
-    build:
-      context: ./combine_app_celery
-      dockerfile: Dockerfile
-    restart: always
-    volumes: 
-      - ./combine_app_celery:/combine_app_celery
-    environment: 
-      - CELERY_BROKER_URL=redis://redis_test:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
-    ports:
-      - "5556:5555"
-      - "5000:5000"
-    depends_on:
-      - redis
+  # combine_app_celery:
+  #   build:
+  #     context: ./combine_app_celery
+  #     dockerfile: Dockerfile
+  #   restart: always
+  #   volumes: 
+  #     - ./combine_app_celery:/combine_app_celery
+  #   environment: 
+  #     - CELERY_BROKER_URL=redis://redis_test:6379/2
+  #     - CELERY_RESULT_BACKEND=redis://redis_test:6379/2
+  #   ports:
+  #     - "5556:5555"
+  #     - "5000:5000"
+  #   depends_on:
+  #     - redis
   # priority_test:
   #   build:
   #     context: ./celery_redis_priority_test
@@ -58,3 +58,29 @@ services:
   redis:
     image: redis
     container_name: redis_test
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=example
+    ports: 
+      - 27018:27017
+  api:    
+    build: 
+        context: ./celery_transaction_mongo
+        dockerfile: Dockerfile
+    volumes: 
+        - ./celery_transaction_mongo:/celery_transaction_mongo
+    environment: 
+        - MONGO_DB_NAME=mongo
+        - MONGO_INITDB_ROOT_USERNAME=root
+        - MONGO_INITDB_ROOT_PASSWORD=example
+        - CELERY_BROKER_URL=redis://redis_test:6379/2
+        - CELERY_RESULT_BACKEND=redis://redis_test:6379/2
+    depends_on: 
+        - mongo
+    ports:
+        - 5001:5000
+        - "5558:5555"
+    restart: always

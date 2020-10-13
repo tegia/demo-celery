@@ -32,19 +32,11 @@ task_routes = {
         'queue': 'c-low',
         'routing_key': 'c-low.priority',
     },
-    f'mytasks.retry': {
-        'queue': 'a-high',
-        'routing_key': 'a-high.priority',
-    },
-    f'mytasks.find_task_fail': {
-        'queue': 'a-high',
-        'routing_key': 'a-high.priority',
-    },
 }
 
 beat_schedule = {
     'add-every-30-seconds': {
-        'task': 'mytasks.find_task_fail',
+        'task': 'mytasks.periodic',
         'schedule': 30.0
     },
 }
