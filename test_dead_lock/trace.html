@@ -1,0 +1,16 @@
+<div class="highlight" style="background: #f8f8f8"><pre style="line-height: 125%; margin: 0;"><span></span><span style="color: #408080; font-style: italic"># ThreadID: 123145311223808</span>
+File: <span style="color: #BA2121">&quot;/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.7/lib/python3.7/threading.py&quot;</span>, line <span style="color: #666666">885</span>, <span style="color: #AA22FF; font-weight: bold">in</span> _bootstrap
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>_bootstrap_inner()
+File: <span style="color: #BA2121">&quot;/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.7/lib/python3.7/threading.py&quot;</span>, line <span style="color: #666666">917</span>, <span style="color: #AA22FF; font-weight: bold">in</span> _bootstrap_inner
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>run()
+File: <span style="color: #BA2121">&quot;/Users/tuongthenghia/Documents/advesa/flask-celery-docker-scale/test_dead_lock/stacktracer.py&quot;</span>, line <span style="color: #666666">51</span>, <span style="color: #AA22FF; font-weight: bold">in</span> run
+  <span style="color: #008000">self</span><span style="color: #666666">.</span>stacktraces()
+File: <span style="color: #BA2121">&quot;/Users/tuongthenghia/Documents/advesa/flask-celery-docker-scale/test_dead_lock/stacktracer.py&quot;</span>, line <span style="color: #666666">65</span>, <span style="color: #AA22FF; font-weight: bold">in</span> stacktraces
+  fout<span style="color: #666666">.</span>write(stacktraces())
+File: <span style="color: #BA2121">&quot;/Users/tuongthenghia/Documents/advesa/flask-celery-docker-scale/test_dead_lock/stacktracer.py&quot;</span>, line <span style="color: #666666">13</span>, <span style="color: #AA22FF; font-weight: bold">in</span> stacktraces
+  <span style="color: #008000; font-weight: bold">for</span> filename, lineno, name, line <span style="color: #AA22FF; font-weight: bold">in</span> traceback<span style="color: #666666">.</span>extract_stack(stack):
+
+<span style="color: #408080; font-style: italic"># ThreadID: 4544626112</span>
+File: <span style="color: #BA2121">&quot;test_dead_lock.py&quot;</span>, line <span style="color: #666666">21</span>, <span style="color: #AA22FF; font-weight: bold">in</span> <span style="color: #666666">&lt;</span>module<span style="color: #666666">&gt;</span>
+  <span style="color: #008000">print</span>(<span style="color: #BA2121">&quot;Adding to queue regularly&quot;</span>)
+</pre></div>

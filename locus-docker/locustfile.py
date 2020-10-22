@@ -52,5 +52,6 @@ class MetricsLocust(HttpUser):
         # #                                                                                                                                                        10)) + "&date_from=" + random.choice(start_date_arr) + "&date_to=" + random.choice(end_date_arr) + "&from=0&size=100" + "&ages=" + str(randint(1, 3)) + "," + str(randint(4, 10)) + "&hour_from=" + random.choice(start_time_arr) + "&hour_to=" + random.choice(end_time_arr) + "&exact_days=" + random.choice(exact_day_arr) + "," + random.choice(exact_day_arr)
         # self.client.post(url)
         
-        self.client.get('/add/'+str(randint(1, 30))+'/'+str(randint(31, 60))+'/'+ str(uuid.uuid4()))
+        # self.client.get('/add/'+str(randint(1, 30))+'/'+str(randint(31, 60))+'/'+ str(uuid.uuid4()))
+        self.client.get('/add/'+str(randint(1, 2))+'/'+str(2))
     wait_time = between(1, 3)

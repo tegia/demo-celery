@@ -1,0 +1,27 @@
+[{
+    "_id": 1,
+    "count": 1,
+    "name": {
+    "firstname": "tuong",
+    "lastname": "nghia",
+    "residence": [{
+        "district": "hai duong", 
+        "ward": "ngoc chau"
+    }, 
+{"district": "nam tu liem",
+    "ward": "my dinh 2" }]
+}},
+{
+    "_id": 2,
+    "count": 1,
+    "name": {
+    "firstname": "trinh",
+    "lastname": "hang",
+    "residence": [{
+        "district": "kim thanh", 
+        "ward": "lai khe"
+    }, 
+{"district": "nam tu liem",
+    "ward": "my dinh 2" }]
+}}
+]

@@ -1,32 +1,32 @@
 version: '2'
 services:
-  # web:
-  #   build:
-  #     context: ./flask_app
-  #     dockerfile: Dockerfile
-  #   restart: always
-  #   environment: 
-  #     - CELERY_BROKER_URL=redis://redis_test:6379/0
-  #     - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
-  #   volumes: 
-  #     - ./flask_app:/flask_app
-  #   ports:
-  #    - "5000:5000"
-  #   depends_on:
-  #     - redis
-  # worker:
-  #   build:
-  #     context: ./flask_celery
-  #     dockerfile: Dockerfile
-  #   volumes: 
-  #     - ./flask_celery:/flask_celery
-  #   environment: 
-  #     - CELERY_BROKER_URL=redis://redis_test:6379/0
-  #     - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
-  #   ports:
-  #     - "5556:5555"
-  #   depends_on:
-  #     - redis
+  web:
+    build:
+      context: ./flask_app
+      dockerfile: Dockerfile
+    restart: always
+    environment: 
+      - CELERY_BROKER_URL=redis://redis_test:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
+    volumes: 
+      - ./flask_app:/flask_app
+    ports:
+     - "5000:5000"
+    depends_on:
+      - redis
+  worker:
+    build:
+      context: ./flask_celery
+      dockerfile: Dockerfile
+    volumes: 
+      - ./flask_celery:/flask_celery
+    environment: 
+      - CELERY_BROKER_URL=redis://redis_test:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
+    ports:
+      - "5556:5555"
+    depends_on:
+      - redis
   # combine_app_celery:
   #   build:
   #     context: ./combine_app_celery
@@ -58,29 +58,29 @@ services:
   redis:
     image: redis
     container_name: redis_test
-  mongo:
-    image: mongo
-    restart: always
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=example
-    ports: 
-      - 27018:27017
-  api:    
-    build: 
-        context: ./celery_transaction_mongo
-        dockerfile: Dockerfile
-    volumes: 
-        - ./celery_transaction_mongo:/celery_transaction_mongo
-    environment: 
-        - MONGO_DB_NAME=mongo
-        - MONGO_INITDB_ROOT_USERNAME=root
-        - MONGO_INITDB_ROOT_PASSWORD=example
-        - CELERY_BROKER_URL=redis://redis_test:6379/2
-        - CELERY_RESULT_BACKEND=redis://redis_test:6379/2
-    depends_on: 
-        - mongo
-    ports:
-        - 5001:5000
-        - "5558:5555"
-    restart: always
+  # mongo:
+  #   image: mongo
+  #   restart: always
+  #   environment:
+  #     - MONGO_INITDB_ROOT_USERNAME=root
+  #     - MONGO_INITDB_ROOT_PASSWORD=example
+  #   ports: 
+  #     - 27018:27017
+  # api:    
+  #   build: 
+  #       context: ./celery_transaction_mongo
+  #       dockerfile: Dockerfile
+  #   volumes: 
+  #       - ./celery_transaction_mongo:/celery_transaction_mongo
+  #   environment: 
+  #       - MONGO_DB_NAME=mongo
+  #       - MONGO_INITDB_ROOT_USERNAME=root
+  #       - MONGO_INITDB_ROOT_PASSWORD=example
+  #       - CELERY_BROKER_URL=redis://redis_test:6379/2
+  #       - CELERY_RESULT_BACKEND=redis://redis_test:6379/2
+  #   depends_on: 
+  #       - mongo
+  #   ports:
+  #       - 5001:5000
+  #       - "5558:5555"
+  #   restart: always
