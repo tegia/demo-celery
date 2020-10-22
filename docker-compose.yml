@@ -13,7 +13,7 @@ services:
     ports:
      - "5000:5000"
     depends_on:
-      - redis
+      - redis_test
   worker:
     build:
       context: ./flask_celery
@@ -26,7 +26,7 @@ services:
     ports:
       - "5556:5555"
     depends_on:
-      - redis
+      - redis_test
   # combine_app_celery:
   #   build:
   #     context: ./combine_app_celery
@@ -55,9 +55,9 @@ services:
   #     - "5556:5555"
   #   depends_on:
   #     - redis
-  redis:
+  redis_test:
     image: redis
-    container_name: redis_test
+    # container_name: redis_test
   # mongo:
   #   image: mongo
   #   restart: always
