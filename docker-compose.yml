@@ -1,6 +1,7 @@
 version: '3.3'
 services:
   web:
+    image: demo_celery/web:0.1
     build:
       context: ./flask_app
       dockerfile: Dockerfile
@@ -15,6 +16,7 @@ services:
     depends_on:
       - redis_test
   worker:
+    image: demo_celery/worker:0.1
     build:
       context: ./flask_celery
       dockerfile: Dockerfile
