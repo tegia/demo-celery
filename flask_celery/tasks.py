@@ -41,6 +41,7 @@ celery= Celery('tasks',
 # @celery.task(name='mytasks.retry')
 # def retry_task_fail():
 #     return 'retry success'
+celery.autodiscover_tasks()
 
 celery.conf.beat_schedule = {
     'add-every-30-seconds': {
