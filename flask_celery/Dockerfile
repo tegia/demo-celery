@@ -15,7 +15,7 @@ ENV C_FORCE_ROOT true
 # copy source code
 COPY . /flask_celery
 WORKDIR /flask_celery
-
+RUN mkdir /logs
 
 # install requirements
 RUN pip3 install -r requirements.txt
