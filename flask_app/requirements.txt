@@ -4,3 +4,4 @@ redis==3.2.0
 Werkzeug==0.15.5
 tornado==5.0.2
 gunicorn
+requests
