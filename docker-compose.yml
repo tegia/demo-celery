@@ -1,49 +1,49 @@
 version: '3.3'
 services:
-  web:
-    image: demo_celery/web:0.1
-    build:
-      context: ./flask_app
-      dockerfile: Dockerfile
-    restart: always
-    environment: 
-      - CELERY_BROKER_URL=redis://redis_test:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
-    volumes: 
-      - ./flask_app:/flask_app
-    ports:
-     - "5000:5000"
-    depends_on:
-      - redis_test
-  worker:
-    image: demo_celery/worker:0.1
-    build:
-      context: ./flask_celery
-      dockerfile: Dockerfile
-    volumes: 
-      - ./flask_celery:/flask_celery
-    environment: 
-      - CELERY_BROKER_URL=redis://redis_test:6379/0
-      - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
-    ports:
-      - "5556:5555"
-    depends_on:
-      - redis_test
-  # combine_app_celery:
+  # web:
+  #   image: demo_celery/web:0.1
   #   build:
-  #     context: ./combine_app_celery
+  #     context: ./flask_app
   #     dockerfile: Dockerfile
   #   restart: always
-  #   volumes: 
-  #     - ./combine_app_celery:/combine_app_celery
   #   environment: 
-  #     - CELERY_BROKER_URL=redis://redis_test:6379/2
-  #     - CELERY_RESULT_BACKEND=redis://redis_test:6379/2
+  #     - CELERY_BROKER_URL=redis://redis_test:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
+  #   volumes: 
+  #     - ./flask_app:/flask_app
+  #   ports:
+  #    - "5000:5000"
+  #   depends_on:
+  #     - redis_test
+  # worker:
+  #   image: demo_celery/worker:0.1
+  #   build:
+  #     context: ./flask_celery
+  #     dockerfile: Dockerfile
+  #   volumes: 
+  #     - ./flask_celery:/flask_celery
+  #   environment: 
+  #     - CELERY_BROKER_URL=redis://redis_test:6379/0
+  #     - CELERY_RESULT_BACKEND=redis://redis_test:6379/0
   #   ports:
   #     - "5556:5555"
-  #     - "5000:5000"
   #   depends_on:
-  #     - redis
+  #     - redis_test
+  combine_app_celery:
+    build:
+      context: ./combine_app_celery
+      dockerfile: Dockerfile
+    restart: always
+    volumes: 
+      - ./combine_app_celery:/combine_app_celery
+    environment: 
+      - CELERY_BROKER_URL=redis://redis_test:6379/2
+      - CELERY_RESULT_BACKEND=redis://redis_test:6379/2
+    ports:
+      - "5556:5555"
+      - "5000:5000"
+    depends_on:
+      - redis_test
   # priority_test:
   #   build:
   #     context: ./celery_redis_priority_test
@@ -58,7 +58,9 @@ services:
   #   depends_on:
   #     - redis
   redis_test:
-    image: redis
+    image: bitnami/redis:5.0
+    environment: 
+      - ALLOW_EMPTY_PASSWORD=yes
     # container_name: redis_test
   # mongo:
   #   image: mongo
@@ -75,7 +77,7 @@ services:
   #   volumes: 
   #       - ./celery_transaction_mongo:/celery_transaction_mongo
   #   environment: 
-  #       - MONGO_DB_NAME=mongo
+  #       - MONordGO_DB_NAME=mongo
   #       - MONGO_INITDB_ROOT_USERNAME=root
   #       - MONGO_INITDB_ROOT_PASSWORD=example
   #       - CELERY_BROKER_URL=redis://redis_test:6379/2
